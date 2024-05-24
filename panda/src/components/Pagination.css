@@ -1,0 +1,11 @@
+.paginationBtn {
+  @apply bg-white w-10 h-10 rounded-full border;
+}
+
+.paginationBtn:disabled {
+  @apply cursor-default opacity-50;
+}
+
+.paginationBtn.active {
+  @apply bg-primaryColor text-white;
+}

@@ -4,26 +4,31 @@ import ArrowDownIcon from "../assets/ic_arrow_down.png";
 import getItems from "../api/api";
 import ItemCard from "./ItemCard";
 import Dropdown from "./Dropdown";
+import Pagination from "./Pagination";
 import { Link } from "react-router-dom";
 
 export default function AllProducts() {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [orderBy, setOrderBy] = useState("recent");
   const [search, setSearch] = useState("");
   const [isVisible, setVisible] = useState(false);
+  const [totalPageNum, setTotalPageNum] = useState();
 
   const toggleDropdown = () => {
     setVisible(!isVisible);
   };
 
-  const fetchData = async ({ orderBy }) => {
-    const products = await getItems({ orderBy });
+  const fetchData = async ({ orderBy, page, pageSize }) => {
+    const products = await getItems({ orderBy, page, pageSize });
     setData(products.list);
+    setTotalPageNum(Math.ceil(products.totalCount / pageSize));
   };
 
   useEffect(() => {
-    fetchData({ orderBy });
-  }, [orderBy]);
+    fetchData({ orderBy, page, pageSize });
+  }, [orderBy, page, pageSize]);
 
   const onChangeSearch = (e) => {
     setSearch(e.target.value);
@@ -40,9 +45,14 @@ export default function AllProducts() {
 
   const filteredProducts = getFilteredData();
 
-  const changeSort = (sortOption) => {
+  const handleChangeSort = (sortOption) => {
     setOrderBy(sortOption);
     setVisible(!isVisible);
+  };
+
+  const handlePage = (pageNumber) => {
+    //페이지를 변경할 함수
+    setPage(pageNumber);
   };
   return (
     <div className="w-7/12 m-auto mt-10">
@@ -75,7 +85,7 @@ export default function AllProducts() {
           <img className="w-6 h-6" src={ArrowDownIcon} alt="arrow down icon" />
           {isVisible && (
             <div className="absolute top-16">
-              <Dropdown onChangeSort={changeSort} />
+              <Dropdown onChangeSort={handleChangeSort} />
             </div>
           )}
         </div>
@@ -84,6 +94,13 @@ export default function AllProducts() {
         {filteredProducts?.map((item) => (
           <ItemCard item={item} key={`market-item-${item.id}`} />
         ))}
+      </div>
+      <div className="mx-auto w-100 flex justify-center">
+        <Pagination
+          page={page}
+          totalPage={totalPageNum}
+          onPageChange={handlePage}
+        />
       </div>
     </div>
   );

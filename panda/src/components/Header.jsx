@@ -10,7 +10,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center px-20 py-2 gap-10 border-b-2">
+    <header className="flex justify-between items-center px-20 py-2 gap-10 border-b-2 bg-white">
       <Link to="/">
         <img src={Logo} alt="logo" className="w-32 h-12" />
       </Link>

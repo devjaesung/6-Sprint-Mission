@@ -19,6 +19,7 @@ module.exports = {
           50: "#f7f7f8",
         },
         coolGray: {
+          50: "#F9FAFB",
           100: "#f3f4f6",
           200: "#E5E7EB",
           400: "#9ca3af",

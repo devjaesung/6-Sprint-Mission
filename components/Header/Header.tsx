@@ -9,7 +9,7 @@ export default function Header() {
         <Image src={Logo} alt="logo" width={128} height={48} />
       </Link>
       <div className="grow flex">
-        <Link href="/board">
+        <Link href="/boards">
           <p className="text-lg text-primaryColor mr-4 font-bold">자유게시판</p>
         </Link>
         <Link href="/items">
